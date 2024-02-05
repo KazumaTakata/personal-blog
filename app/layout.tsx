@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
-import { Inter, Noto_Sans_JP } from "next/font/google";
+import { Noto_Sans_JP } from "next/font/google";
+import { Header } from "./ui/header";
+import { Footer } from "./ui/footer";
+
 
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
-const notoSans = Noto_Sans_JP({subsets: ["latin"]});
+const notoSans = Noto_Sans_JP({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -19,23 +21,10 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body className={notoSans.className}>
-        <Header></Header> 
+        <Header></Header>
         {children}
-        <Footer></Footer> 
-        </body>
+      </body>
     </html>
-  );
-}
-
-function Header() {
-  return (
-    <header>this is header</header>
-  );
-}
-
-function Footer() {
-  return (
-    <footer>this is footer</footer>
   );
 }
 
