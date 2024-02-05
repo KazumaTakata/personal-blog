@@ -1,12 +1,7 @@
-interface HomeProps {
-  users: string;
-}
 
-export default async function Home(data: HomeProps) {
+export default async function Home() {
   debugger;
   const mydata = await getData();
-
-  console.log(mydata);
 
   const posts = ["post1", "post2", "post2", "post2", "post2"];
 

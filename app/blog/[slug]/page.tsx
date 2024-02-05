@@ -1,3 +1,16 @@
+// Return a list of `params` to populate the [slug] dynamic segment
+import { promises as fs } from "fs";
+
+export async function generateStaticParams() {
+  const files = await fs.readdir(process.cwd() + "/markdown", "utf8");
+
+  // console.log(files);
+
+  return files.map((filepath: string) => ({
+    slug: filepath,
+  }));
+}
+
 interface Post {
   title: string;
   body: string;
