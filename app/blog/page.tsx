@@ -3,9 +3,11 @@ interface Post {
   body: string;
 }
 
-export default async function Home({ params }: { params: { slug: string } }) {
-  console.log(params);
 
+export default async function Home({ params }: { params: { slug: string } }) {
+
+
+  console.log(params);
   const posts: Post[] = [
     {
       title: "Introducing Catalyst: A modern UI kit for React",
@@ -29,6 +31,7 @@ export default async function Home({ params }: { params: { slug: string } }) {
           <p className="text-sm">{post.body}</p>
         </article>
       ))}
+
     </div>
   );
   return body;

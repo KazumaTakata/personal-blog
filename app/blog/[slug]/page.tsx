@@ -1,3 +1,8 @@
+import { remark } from "remark";
+import remarkHtml from "remark-html";
+
+import styles from './markdown.module.css'
+
 // Return a list of `params` to populate the [slug] dynamic segment
 import { promises as fs } from "fs";
 
@@ -11,6 +16,11 @@ export async function generateStaticParams() {
   }));
 }
 
+export const markdownToHtml = async (markdownContent: string) => {
+  const result = await remark().use(remarkHtml).process(markdownContent);
+  return result.toString();
+};
+
 interface Post {
   title: string;
   body: string;
@@ -19,29 +29,16 @@ interface Post {
 export default async function Home({ params }: { params: { slug: string } }) {
   console.log(params);
 
-  const posts: Post[] = [
-    {
-      title: "Introducing Catalyst: A modern UI kit for React",
-      body: "Today’s the day — we just published the first development preview of Catalyst, just in time for your holiday hacking sessions.",
-    },
-    {
-      title: "Introducing Catalyst: A modern UI kit for React",
-      body: "Today’s the day — we just published the first development preview of Catalyst, just in time for your holiday hacking sessions.",
-    },
-    {
-      title: "Introducing Catalyst: A modern UI kit for React",
-      body: "Today’s the day — we just published the first development preview of Catalyst, just in time for your holiday hacking sessions.",
-    },
-  ];
+  const markdown: string = await fs.readFile(
+    process.cwd() + "/markdown/" + params.slug,
+    "utf8"
+  );
+
+  let markdownHtml = await markdownToHtml(markdown);
 
   let body = (
-    <div className="m-10">
-      {posts.map((post) => (
-        <article key={post.title} className="mb-10">
-          <h3 className="text-base font-bold">{post.title}</h3>
-          <p className="text-sm">{post.body}</p>
-        </article>
-      ))}
+    <div className={styles.markdown}>
+      <div dangerouslySetInnerHTML={{ __html: markdownHtml }} />
     </div>
   );
   return body;
